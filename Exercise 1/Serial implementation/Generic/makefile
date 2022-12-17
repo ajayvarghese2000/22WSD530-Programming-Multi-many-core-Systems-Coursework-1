@@ -9,4 +9,4 @@ Matrix_Multiply_Serial_Fixed_Values:
 	@echo "Done Compiling Matrix_Multiply_Serial"
 
 	@echo "Running Matrix_Multiply_Serial.exe"
-	@./bin/Matrix_Multiply_Serial.exe
+	@./bin/Matrix_Multiply_Serial.exe -A 3000x3000 -B 3000x3000
