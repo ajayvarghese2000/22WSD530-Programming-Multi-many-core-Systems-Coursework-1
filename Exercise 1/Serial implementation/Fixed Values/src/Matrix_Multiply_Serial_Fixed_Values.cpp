@@ -9,14 +9,22 @@
  *          therefore does not use any parallelism and is limited to one thread.
 */
 
-// The size of the matrices 
-#define MATRIX_SIZE 1000    // (this can only be 4 or 1000, will default to 1000 matrix if anything else is entered)
-#define Timer               // (this will enable the timer, comment out to disable)
+// The size of the matrices these will be determined at compile time
+#ifdef matrix_4x4
+    #define MATRIX_SIZE 4
+#elif matrix_1000x1000
+    #define MATRIX_SIZE 1000
+#else
+    #define MATRIX_SIZE 1000
+#endif
+
+//#define timer               // (this will enable the timer, comment out to disable)
+                              // Can also be enabled by adding -D timer to the compiler options
 
 /* ################### [Includes] ###################*/
 #include <iostream>                         // For cout, cin, endl
 #include "../includes/Matrix_Values.h"      // For Matrix Values
-#ifdef Timer
+#ifdef timer
     #include <chrono>                       // For timer
 #endif
 
@@ -105,7 +113,7 @@ int main()
 {   
     
     // Start the timer
-    #ifdef Timer
+    #ifdef timer
         auto start = chrono::high_resolution_clock::now();
     #endif
 
@@ -117,15 +125,14 @@ int main()
     #endif
 
     // Stop the timer
-    #ifdef Timer
+    #ifdef timer
         auto stop = chrono::high_resolution_clock::now();
-        auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
-        cout << "Time taken : " << duration.count() << " uS" << endl;
-        cout << endl;
+        auto duration = chrono::duration_cast<chrono::nanoseconds>(stop - start);
+        cout << duration.count() << " nS" << endl;
     #endif
 
-    // Only print the result if Timer is not defined
-    #ifndef Timer
+    // Only print the result if timer is not defined
+    #ifndef timer
 
         // Print the result to the console only if the matrix size is 4
         #if MATRIX_SIZE == 4
@@ -146,8 +153,8 @@ int main()
 
     #endif
 
-    // Only validate the result if Timer is not defined
-    #ifndef Timer
+    // Only validate the result if timer is not defined
+    #ifndef timer
 
         // Validate the result
         #if MATRIX_SIZE == 4
