@@ -27,3 +27,8 @@
 *.lib
 
 .vscode/
+
+# Bins
+*.exe
+*.out
+*.app
