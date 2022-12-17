@@ -1,11 +1,11 @@
 # Compiler
 CXX = g++
 # Number of runs to execute
-runs = 10
+runs ?= 10
 # Matrix size can be matrix_1000x1000 or matrix_4x4
-matrix = matrix_1000x1000
+matrix ?= matrix_1000x1000
 # the timer definition
-timer = timer
+timer ?= timer
 # The cpp flags
 CXXFLAGS := -D $(matrix) -D $(timer)
 
