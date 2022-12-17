@@ -14,5 +14,5 @@ Matrix_Multiply_Serial_Fixed_Values:
 	@echo "Compiling Matrix_Multiply_Serial_Fixed_Values"
 	@$(CXX) $(CXXFLAGS) ./src/Matrix_Multiply_Serial_Fixed_Values.cpp ./includes/*.h -o ./bin/Matrix_Multiply_Serial_Fixed_Values.exe
 	@echo "Done Compiling Matrix_Multiply_Serial_Fixed_Values"
-	@echo "Running Matrix_Multiply_Serial_Fixed_Values for $(RUNS) times"
+	@echo "Running Matrix_Multiply_Serial_Fixed_Values for $(RUNS) times using the $(matrix) matrix"
 	@for number in {1..$(RUNS)}; do ./bin/Matrix_Multiply_Serial_Fixed_Values.exe; done
