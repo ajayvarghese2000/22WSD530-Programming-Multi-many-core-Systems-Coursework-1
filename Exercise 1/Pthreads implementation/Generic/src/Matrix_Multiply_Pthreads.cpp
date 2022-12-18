@@ -70,10 +70,14 @@ void *Matrix_Multiply(void *input)
         // Looping over the columns of matrix b
         for (int j = 0; j < Input->B_Columns; j++)
         {
+            
+            // Setting the value of the current element in matrix C to 0
+            Input->Matrix_C[i][j] = 0;
+
             // Looping over the rows of matrix b
             for (int k = 0; k < Input->B_Rows; k++)
             {
-                Input->Matrix_C[i][j] += Input->Matrix_A[i][k] * Input->Matrix_B[k][j];
+                Input->Matrix_C[i][j] = Input->Matrix_C[i][j]+ Input->Matrix_A[i][k] * Input->Matrix_B[k][j];
             }
         }
     }
@@ -193,7 +197,6 @@ int main(int argc, char *argv[])
             Matrix_B[i][j] = rand() % 100;
         }
     }
-
 
     // Printing the inputs if the PRINT_MODE is enabled
     #ifdef PRINT_MODE
