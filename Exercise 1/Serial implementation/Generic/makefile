@@ -9,9 +9,9 @@ a_size ?= 100x100
 # Size of B
 b_size ?= 100x100
 
-Matrix_Multiply_Serial_Fixed_Values:
+Matrix_Multiply_Serial:
     # Compiling the application
-	@echo "Compiling Matrix_Multiply_Serial_Fixed_Values"
+	@echo "Compiling Matrix_Multiply_Serial"
 	@$(CXX) $(CXXFLAGS) ./src/Matrix_Multiply_Serial.cpp -o ./bin/Matrix_Multiply_Serial.exe
 	@echo "Done Compiling Matrix_Multiply_Serial"
     # Running the application for the number of runs

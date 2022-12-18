@@ -1,5 +1,5 @@
 /**
- * @name    Matrix_Multiply_Serial_Fixed_Values.cpp
+ * @name    Matrix_Multiply_Serial.cpp
  * @author  B929164
  * @date    17/12/2022
  * @brief   This program multiplies two matrices. The program can then prints the
