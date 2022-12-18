@@ -5,9 +5,9 @@ CXXFLAGS :=
 # The number of runs to do
 runs ?= 10
 # Size of A
-a_size ?= 100x100
+a_size ?= 5x5
 # Size of B
-b_size ?= 100x100
+b_size ?= 5x5
 
 Matrix_Multiply_Serial:
     # Compiling the application

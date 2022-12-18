@@ -15,7 +15,7 @@
 #elif matrix_1000x1000
     #define MATRIX_SIZE 1000
 #else
-    #define MATRIX_SIZE 1000
+    #define MATRIX_SIZE 4
 #endif
 
 //#define timer               // (this will enable the timer, comment out to disable)

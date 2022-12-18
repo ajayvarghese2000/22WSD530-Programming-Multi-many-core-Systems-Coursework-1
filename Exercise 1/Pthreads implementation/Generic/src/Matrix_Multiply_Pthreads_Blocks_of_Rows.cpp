@@ -25,6 +25,7 @@
 #include <iostream>     // for cout, endl
 #include <chrono>       // for timing
 #include <pthread.h>    // for pthreads
+// #include "../includes/Matrix_Values.h"
 
 using namespace std;
 
@@ -36,18 +37,19 @@ using namespace std;
 //#define PRINT_MODE  // comment out to disable printing
 
 
+/* ################### [Global Variables] ################### */
 
-/* ################### [Matrix Multiply] ################### */
+// Double Pointer to each matrix that will be allocated memory in main
+int **pMatrix_A;
+int **pMatrix_B;
+int **pMatrix_C;
 
-struct Matrix_Multiply_Pthreads_Input
-{
-    int **Matrix_A;
-    int **Matrix_B;
-    int **Matrix_C;
-    int A_Rows;
-    int A_Columns;
-    int B_Rows;
-    int B_Columns;
+// The number of columns and rows in each matrix and the number of threads to use
+int A_Columns, A_Rows, B_Columns, B_Rows, Num_T = 0;    // These will be set in main
+
+struct Pthreads_Input
+{   
+    // The start and end row of the matrix that the thread will multiply
     int Start_Row;
     int End_Row;
 };
@@ -61,23 +63,17 @@ struct Matrix_Multiply_Pthreads_Input
  */
 void *Matrix_Multiply(void *input)
 {
-    // Extracting the input from the void pointer
-    Matrix_Multiply_Pthreads_Input *Input = (Matrix_Multiply_Pthreads_Input*)input;
+    // Cast the input to a Pthreads_Input struct
+    Pthreads_Input *pInput = (Pthreads_Input*)input;
 
-    // Looping over the rows of matrix a
-    for (int i = Input->Start_Row; i < Input->End_Row; i++)
+    // Preform the multiplication
+    for (int i = pInput->Start_Row; i < pInput->End_Row; i++)
     {
-        // Looping over the columns of matrix b
-        for (int j = 0; j < Input->B_Columns; j++)
+        for (int j = 0; j < B_Columns; j++)
         {
-            
-            // Setting the value of the current element in matrix C to 0
-            Input->Matrix_C[i][j] = 0;
-
-            // Looping over the rows of matrix b
-            for (int k = 0; k < Input->B_Rows; k++)
+            for (int k = 0; k < A_Columns; k++)
             {
-                Input->Matrix_C[i][j] = Input->Matrix_C[i][j]+ Input->Matrix_A[i][k] * Input->Matrix_B[k][j];
+                pMatrix_C[i][j] += pMatrix_A[i][k] * pMatrix_B[k][j];
             }
         }
     }
@@ -93,7 +89,6 @@ int main(int argc, char *argv[])
     int A = 0;
     int B = 0;
     int T = 0;
-    int A_Columns, A_Rows, B_Columns, B_Rows, Num_T = 0;
 
     // Loop over argv to see if "-A" and "-B" and "-T" are present then extract the value
     for (int i = 0; i < argc; i++)
@@ -198,6 +193,30 @@ int main(int argc, char *argv[])
         }
     }
 
+    // Initializing the C matrix to 0
+    for (int i = 0; i < A_Rows; i++)
+    {
+        for (int j = 0; j < B_Columns; j++)
+        {
+            Matrix_C[i][j] = 0;
+        }
+    }
+
+    // // Coping Matrix_4x4_A and Matrix_4x4_B to the matrices A and B
+    // for (int i = 0; i < 4; i++)
+    // {
+    //     for (int j = 0; j < 4; j++)
+    //     {
+    //         Matrix_A[i][j] = Matrix_4x4_A[i][j];
+    //         Matrix_B[i][j] = Matrix_4x4_B[i][j];
+    //     }
+    // }
+
+    // Setting up the global pointers to the matrices
+    pMatrix_A = Matrix_A;
+    pMatrix_B = Matrix_B;
+    pMatrix_C = Matrix_C;
+
     // Printing the inputs if the PRINT_MODE is enabled
     #ifdef PRINT_MODE
 
@@ -229,43 +248,45 @@ int main(int argc, char *argv[])
     // Starting the timer
     auto start = chrono::high_resolution_clock::now();
 
+    // Calculating the number of rows each thread will be responsible for
+    int Rows_Per_Thread = A_Rows / Num_T;
+
+    // Check if the rows per thread is 0 (Happens when the number of threads is greater than the number of rows)
+    if (Rows_Per_Thread == 0)
+    {
+        // If the rows per thread is 0 then set it to 1
+        Rows_Per_Thread = 1;
+
+        // Set the number of threads to the number of rows
+        Num_T = A_Rows;
+    }
+
     // Creating the threads
     pthread_t threads[Num_T];
 
-    // Creating the thread input struct
-    Matrix_Multiply_Pthreads_Input *thread_input = new Matrix_Multiply_Pthreads_Input[Num_T];
+    // Creating the thread inputs array, one for each thread
+    Pthreads_Input *thread_input = new Pthreads_Input[Num_T];
 
-    // Loop over the number of threads
+    // Creating the threads and setting the thread inputs
     for (int i = 0; i < Num_T; i++)
     {
-        // Setting the pointers to the matrices
-        thread_input[i].Matrix_A = Matrix_A;
-        thread_input[i].Matrix_B = Matrix_B;
-        thread_input[i].Matrix_C = Matrix_C;
+        // Setting the start row for the matrix
+        thread_input[i].Start_Row = (i * Rows_Per_Thread);
 
-        // Setting the dimensions of the matrices
-        thread_input[i].A_Rows = A_Rows;
-        thread_input[i].A_Columns = A_Columns;
-        thread_input[i].B_Rows = B_Rows;
-        thread_input[i].B_Columns = B_Columns;
-
-        // Calculating the number of rows each thread will be responsible for
-        int Rows_Per_Thread = A_Rows / Num_T;
-
-        // Calculating the starting row for each thread
-        thread_input[i].Start_Row = i * Rows_Per_Thread;
-
-        // Calculating the ending row for each thread
+        
+        // Setting the end row for the matrix
         thread_input[i].End_Row = (i + 1) * Rows_Per_Thread;
 
-        // If the thread is the last thread then it will be responsible for the remaining rows
+        // Check if this is the last thread
         if (i == Num_T - 1)
         {
+            // If this is the last thread then set the end row to the number of rows in the first matrix
             thread_input[i].End_Row = A_Rows;
         }
 
         // Creating the thread
         pthread_create(&threads[i], NULL, Matrix_Multiply, (void *)&thread_input[i]);
+
     }
 
     // Waiting for the threads to finish

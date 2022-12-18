@@ -1,15 +1,15 @@
 # Compiler
 CXX = g++
 # The cpp flags
-CXXFLAGS :=
+CXXFLAGS := -lpthread 
 # The number of runs to do
-runs ?= 10
+runs ?= 1
 # Size of A
-a_size ?= 100x100
+a_size ?= 2000x2000
 # Size of B
-b_size ?= 100x100
+b_size ?= 2000x2000
 # Number of threads
-threads ?= 12
+threads ?= 11
 
 Matrix_Multiply_Pthreads:
     # Compiling the application

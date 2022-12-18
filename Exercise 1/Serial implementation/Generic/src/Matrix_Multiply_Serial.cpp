@@ -25,6 +25,30 @@
 
 using namespace std;
 
+/* ################### [Defines] ################### */
+
+
+
+//#define PRINT_MODE  // comment out to disable printing
+
+/* ################### [Functions] ################### */
+
+void Matrix_Multiply(int **Matrix_A, int **Matrix_B, int **Matrix_C, int A_Rows, int A_Columns, int B_Columns, int B_Rows)
+{
+    for (int i = 0; i < A_Rows; i++)
+    {
+        for (int j = 0; j < B_Columns; j++)
+        {
+            Matrix_C[i][j] = 0;
+            
+            for (int k = 0; k < A_Columns; k++)
+            {
+                Matrix_C[i][j] += Matrix_A[i][k] * Matrix_B[k][j];
+            }
+        }
+    }
+}
+
 
 /* ################### [Main] ################### */
 
@@ -161,17 +185,8 @@ int main(int argc, char *argv[])
     // Starting the timer
     auto start = chrono::high_resolution_clock::now();
 
-    // Multiplying the matrices
-    for (int i = 0; i < A_Rows; i++)
-    {
-        for (int j = 0; j < B_Columns; j++)
-        {
-            for (int k = 0; k < A_Columns; k++)
-            {
-                Matrix_C[i][j] == Matrix_C[i][j] + Matrix_A[i][k] * Matrix_B[k][j];
-            }
-        }
-    }
+    // Multiplying the matrices using the function
+    Matrix_Multiply(Matrix_A, Matrix_B, Matrix_C, A_Rows, A_Columns, B_Columns, B_Rows);
 
     // Stopping the timer
     auto stop = chrono::high_resolution_clock::now();
