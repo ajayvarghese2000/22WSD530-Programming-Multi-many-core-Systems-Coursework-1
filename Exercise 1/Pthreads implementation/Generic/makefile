@@ -14,7 +14,7 @@ threads ?= 12
 Matrix_Multiply_Pthreads:
     # Compiling the application
 	@echo "Compiling Matrix_Multiply_Pthreads"
-	@$(CXX) $(CXXFLAGS) ./src/Matrix_Multiply_Pthreads.cpp -o ./bin/Matrix_Multiply_Pthreads.exe
+	@$(CXX) $(CXXFLAGS) ./src/Matrix_Multiply_Pthreads.cpp ./includes/*.h -o ./bin/Matrix_Multiply_Pthreads.exe
 	@echo "Done Compiling Matrix_Multiply_Pthreads"
     # Running the application for the number of runs
 	@echo "Running Matrix_Multiply_Pthreads.exe for $(runs) times using A of size $(a_size) and B of size $(b_size) using $(threads) threads"
