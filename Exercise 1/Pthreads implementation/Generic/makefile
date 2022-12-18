@@ -9,7 +9,7 @@ a_size ?= 2000x2000
 # Size of B
 b_size ?= 2000x2000
 # Number of threads
-threads ?= 11
+threads ?= 8
 
 Matrix_Multiply_Pthreads:
     # Compiling the application

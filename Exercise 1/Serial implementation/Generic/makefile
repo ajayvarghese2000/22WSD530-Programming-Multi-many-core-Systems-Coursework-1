@@ -3,11 +3,11 @@ CXX = g++
 # The cpp flags
 CXXFLAGS :=
 # The number of runs to do
-runs ?= 10
+runs ?= 1
 # Size of A
-a_size ?= 5x5
+a_size ?= 2000x2000
 # Size of B
-b_size ?= 5x5
+b_size ?= 2000x2000
 
 Matrix_Multiply_Serial:
     # Compiling the application
