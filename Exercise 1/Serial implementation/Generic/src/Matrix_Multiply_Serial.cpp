@@ -199,5 +199,25 @@ int main(int argc, char *argv[])
     // Printing the time taken
     cout << duration.count() << " nS" << endl;
 
+    // Freeing the memory
+    for (int i = 0; i < A_Rows; i++)
+    {
+        delete[] Matrix_A[i];
+    }
+
+    for (int i = 0; i < B_Rows; i++)
+    {
+        delete[] Matrix_B[i];
+    }
+
+    for (int i = 0; i < A_Rows; i++)
+    {
+        delete[] Matrix_C[i];
+    }
+
+    delete[] Matrix_A;
+    delete[] Matrix_B;
+    delete[] Matrix_C;
+
     return 0;
 }
