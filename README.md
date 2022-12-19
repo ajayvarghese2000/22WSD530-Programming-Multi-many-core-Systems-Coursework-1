@@ -37,12 +37,12 @@ They are also summarised below.
         - [500x500](#500x500)
         - [1000x1000](#1000x1000)
         - [2000x2000](#2000x2000)
-- [Exercise 2 Producer Consumer Problem](Exercise-2-Producer-Consumer-Problem)
-    - [Introduction](#Introduction)
-    - [Implementation](#Implementation)
-    - [Build Guide](#Build-Guide)
+- [Exercise 2 Producer Consumer Problem](#Exercise-2-Producer-Consumer-Problem)
+    - [Introduction](#Introduction-1)
+    - [Implementation](#Implementation-1)
+    - [Build Guide](#Build-Guide-1)
         - [Prerequisites](#Prerequisites)
-        - [Running the program](#Running-the-program)
+        - [Running the program](#Running-the-program-1)
 
 ---
 
