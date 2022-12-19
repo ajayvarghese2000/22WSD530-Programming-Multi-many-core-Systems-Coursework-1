@@ -26,7 +26,7 @@
  *          This will create 5 producers and 5 consumers. Each producer will produce
  *          100 elements and the buffer will have a size of 10.
  * 
- */
+*/
 
 
 
@@ -38,7 +38,6 @@
 #include <random>       // For random number generation using the poisson distribution
 
 using namespace std;
-
 
 /* ######################## [Defines] ######################## */
 
@@ -106,7 +105,6 @@ struct consumerInputArgs
 
 };
 
-
 /* ######################## [Functions ] ######################## */
 
 /**
@@ -124,53 +122,58 @@ void quicksort(int* array, int size, int element)
     if (size == 0)
     {
         array[0] = element;
+        
+        // Exit the function
+        return;
     }
-    else
+
+    // The following code will only run if the array is not empty
+
+    // Find the correct position for the element
+    for (int i = 0; i < size; i++)
     {
-        // Find the correct position for the element
-        for (int i = 0; i < size; i++)
+        // If the element is smaller than the current element, insert it before
+        if (element < array[i])
         {
-            // If the element is smaller than the current element, insert it before
-            if (element < array[i])
+            // Shift all the elements after the current element up one
+            for (int j = size; j > i; j--)
             {
-                // Shift all the elements after the current element up one
-                for (int j = size; j > i; j--)
-                {
-                    array[j] = array[j - 1];
-                }
-
-                // Insert the element
-                array[i] = element;
-
-                // Exit the loop
-                break;
+                array[j] = array[j - 1];
             }
-            // If the element is larger than the current element, insert it after
-            else if (element > array[i])
-            {
-                // If the element is the last element in the array, insert it at the end
-                if (i == size - 1)
-                {
-                    array[size] = element;
-                }
-            }
-            // If the element is equal to the current element, insert it after
-            else
-            {
-                // Shift all the elements after the current element up one
-                for (int j = size; j > i; j--)
-                {
-                    array[j] = array[j - 1];
-                }
 
-                // Insert the element
-                array[i + 1] = element;
+            // Insert the element
+            array[i] = element;
 
-                // Exit the loop
-                break;
+            // Exit the loop
+            break;
+        }
+        // If the element is larger than the current element, insert it after
+        else if (element > array[i])
+        {
+            // If the element is the last element in the array, insert it at the end
+            if (i == size - 1)
+            {
+                array[size] = element;
             }
         }
+        // If the element is equal to the current element, insert it after
+        else
+        {
+            // Shift all the elements after the current element up one
+            for (int j = size; j > i; j--)
+            {
+                array[j] = array[j - 1];
+            }
+
+            // Insert the element
+            array[i + 1] = element;
+
+            // Exit the loop
+            break;
+        }
+
     }
+
 }
 
 
@@ -232,8 +235,8 @@ void* producer(void* args)
  * @brief   This function will be called by each consumer thread. It will consume
  *          the number from the buffer and adds it to its own internal array where
  *          it is sorted using the quick sort algorithm. This sorted array is then
- *          printed to the console. The consumers will consume until all the producers
- *          have finished producing after which they will terminate.
+ *          printed to the console. The consumers will consume until all the data
+ *          has been consumed either by the current consumer or another consumer.
  * 
  * @param   args    A pointer to the arguments that will be passed to the thread
  * 
@@ -296,9 +299,9 @@ void* consumer(void* args)
         // cout << "Consumer " << pthread_self() << " Got: " << temp << endl;
 
         // Preform a quick sort on the array to insert the new element
-        quicksort(sortedArray, i , temp);
+        quicksort(sortedArray, i , temp);       // Each consumer has its own array so there is no need to lock the array
 
-        // Lock the cout mutex
+        // Lock the cout mutex so that only one consumer prints at a time
         pthread_mutex_lock(inputArgs->coutMutex);
 
         // Printout which consumer is printing the sorted array
@@ -372,7 +375,7 @@ int main(int argc, char *argv[])
     // Create the buffer
     int buffer[bufferSize];
 
-    // Create the mutexs
+    // Create and initialise the mutexes
     pthread_mutex_t mutexBuffer = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_t mutexTotalElementsConsumed = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_t mutexCout = PTHREAD_MUTEX_INITIALIZER;
