@@ -289,8 +289,13 @@ int main(int argc, char *argv[])
             thread_input[i].End_Row = A_Rows;
         }
 
-        // Creating the thread
-        pthread_create(&threads[i], NULL, Matrix_Multiply, (void *)&thread_input[i]);
+        // Creating the thread and checking for errors
+        if (pthread_create(&threads[i], NULL, Matrix_Multiply, (void *)&thread_input[i]) != 0)
+        {
+            // Printing the error message and terminating the program if a thread could not be created
+            cerr << "Error creating thread" << endl;
+            return 0;
+        }
 
     }
 
