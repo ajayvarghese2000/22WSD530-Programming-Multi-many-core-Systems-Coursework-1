@@ -314,7 +314,7 @@ void* consumer(void* args)
 
         // Unlock the cout mutex
         pthread_mutex_unlock(inputArgs->coutMutex);
-        
+
     }
 
     return NULL;
@@ -462,6 +462,8 @@ int main(int argc, char *argv[])
 
     // Destroy the mutex
     pthread_mutex_destroy(&mutexBuffer);
+    pthread_mutex_destroy(&mutexTotalElementsConsumed);
+    pthread_mutex_destroy(&mutexCout);
 
     return 0;
     
