@@ -55,28 +55,6 @@ They are also summarised below.
 
 ----
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Folder Structure](#folder-structure)
-- [Implementation](#implementation)
-- [Build Guide](#build-guide)
-    - [Pre-requisites](#pre-requisites)
-    - [Running the programs](#running-the-programs)
-        - [Single Threaded Generic](#single-threaded-generic)
-        - [Single Threaded Fixed](#single-threaded-fixed)
-        - [Multi Threaded Generic](#multi-threaded-generic)
-        - [Multi Threaded Fixed](#multi-threaded-fixed)
-- [Experiment Setup](#experiment-setup)
-- [Methodology](#methodology)
-- [Results](#results)
-    - [5x5](#5x5)
-    - [50x50](#50x50)
-    - [500x500](#500x500)
-    - [1000x1000](#1000x1000)
-    - [2000x2000](#2000x2000)
-
-----
-
 ## Introduction
 
 This exercise aims to measure the performance of a matrix multiplication algorithm using pthreads. The algorithm is a simple matrix multiplication algorithm that uses a single thread to calculate each element of the resulting matrix. The algorithm is as follows:
@@ -451,16 +429,6 @@ The Amdahl's Law Parallel Efficiency for this was 0.92 as well.
 </p>
 
 ----
-
-## Table of Contents
-- [Introduction](#Introduction)
-- [Implementation](#Implementation)
-- [Build Guide](#Build-Guide)
-    - [Prerequisites](#Prerequisites)
-    - [Running the program](#Running-the-program)
-    
-----
-
 ## Introduction
 
 The producer consumer problem is a classic problem in computer science. It is a problem where there are multiple producers and consumers that share a common buffer. The producers produce items and place them in the buffer and the consumers consume the items from the buffer. 
