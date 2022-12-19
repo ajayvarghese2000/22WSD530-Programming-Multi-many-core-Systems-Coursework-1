@@ -42,7 +42,7 @@ They are also summarised below.
     - [Implementation](#Implementation-1)
     - [Build Guide](#Build-Guide-1)
         - [Prerequisites](#Prerequisites)
-        - [Running the program](#Running-the-program-1)
+        - [Running the program](#Running-the-program)
 
 ---
 
