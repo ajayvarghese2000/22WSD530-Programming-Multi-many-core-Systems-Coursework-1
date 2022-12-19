@@ -3,7 +3,7 @@ CXX = g++
 # The number of runs to do
 runs ?= 1
 # Number of threads
-threads ?= 11
+threads ?= 8
 # The matrix to use
 matrix ?= matrix_4x4
 # Printmode

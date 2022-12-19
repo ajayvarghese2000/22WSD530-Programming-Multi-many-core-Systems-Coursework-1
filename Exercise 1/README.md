@@ -23,10 +23,10 @@
 - [Implementation](#implementation)
 - [Build Guide](#build-guide)
     - [Pre-requisites](#pre-requisites)
-    - [Running the programs](#running-the-program)
-        - [Single Threaded Generic](#single-threaded)
+    - [Running the programs](#running-the-programs)
+        - [Single Threaded Generic](#single-threaded-generic)
         - [Single Threaded Fixed](#single-threaded-fixed)
-        - [Multi Threaded Generic](#multi-threaded)
+        - [Multi Threaded Generic](#multi-threaded-generic)
         - [Multi Threaded Fixed](#multi-threaded-fixed)
 - [Experiment Setup](#experiment-setup)
 - [Methodology](#methodology)
@@ -133,7 +133,7 @@ All the programs comes with a makefile. To build the program simply run the foll
 This will build the program and place create an executable file in `./bin/` directory.
 Furthermore, this make file will also run the program using some default values. What the default value are and how to change them will be explained in each programs individual section.
 
-### Prerequisites
+### Pre-requisites
 
 This is a c++ program and therefore requires a c++ compiler. The program was developed using the g++ compiler. The program also requires the pthread library to be installed. It also requires a version GNU Make to be installed.
 
@@ -268,6 +268,34 @@ You can also interact with the raw executable file directly. To do this, navigat
 ```
 
 Where `-A` is the size of the first matrix and `-B` is the size of the second matrix. The size of the matrices are in the format `widthxheight`. `-T` is the number of threads to use for multiplication.
+
+#### Multi Threaded Fixed
+
+First, navigate to the `./Exercise 2/Pthreads Implementation/Fixed Values` directory.
+
+To run the program with the default values, simply run the following command in the terminal.
+
+```
+    make
+```
+
+This will build the program and place create an executable file in `./bin/` directory.
+
+By default it will use the 4x4 matrix, with 8 threads, and print the matrices and the resulting matrix to the console. It will also validate the answer against the correct answer that can be found in the `./Exercise 2/Pthreads Implementation/Fixed Values/includes/Matrix_Values.h` file.
+
+The user has the option to either use a 4x4 matrix or a 1000x1000 matrix. To use the 1000x1000 matrix, simply change the `matrix` variable in the make file or on the command line. For example, to use the 1000x1000 matrix, run the following command in the terminal.
+
+```
+    make matrix=matrix_1000x1000
+```
+
+Likewise to change the number of threads, simply change the `threads` variable either in the make file or on the command line. For example, to run the program with two matrices of size 1000x1000 each and use 4 threads for multiplication, run the following command in the terminal.
+
+```
+    make matrix=matrix_1000x1000 threads=4
+```
+
+**This program should not be interacted with using arguments and must be interacted with using the make file due to needing compile directives**
 
 ----
 
