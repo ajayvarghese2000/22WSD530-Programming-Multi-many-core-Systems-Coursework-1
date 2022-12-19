@@ -263,3 +263,22 @@ You can also interact with the raw executable file directly. To do this, navigat
 ```
 
 Where `-A` is the size of the first matrix and `-B` is the size of the second matrix. The size of the matrices are in the format `widthxheight`. `-T` is the number of threads to use for multiplication.
+
+----
+
+## Experiment Setup
+
+The experiments were conducted on a Windows 10 Version 10.0.19044 Build 19044 machine with the following specifications.
+
+**CPU: Intel Core i7-8700k @ 3.70GHz (12 CPUs), boost to 4.30GHz**
+
+**RAM: 16GB DDR4 3000MHz**
+
+**GPU: Nvidia RTX 3070 Ti**
+
+The applications were compiled using g++ version 11.2.0.
+
+There were no other applications running in teh foreground during the experiments other than the terminal.
+
+----
+
