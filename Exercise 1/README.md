@@ -31,6 +31,11 @@
 - [Experiment Setup](#experiment-setup)
 - [Methodology](#methodology)
 - [Results](#results)
+    - [5x5](#5x5)
+    - [50x50](#50x50)
+    - [500x500](#500x500)
+    - [1000x1000](#1000x1000)
+    - [2000x2000](#2000x2000)
 
 ----
 
@@ -279,6 +284,96 @@ The experiments were conducted on a Windows 10 Version 10.0.19044 Build 19044 ma
 The applications were compiled using g++ version 11.2.0.
 
 There were no other applications running in teh foreground during the experiments other than the terminal.
+
+----
+
+## Methodology
+
+First serial implementation of the matrix multiplication application was tested.
+Matrix sizes of the following were tested:
+
+1. 5x5
+2. 50x50
+3. 500x500
+4. 1000x1000
+5. 2000x2000
+
+Each matrix size was tested 100 times and the average time taken was calculated.
+
+The same was done for the pthread implementation of the matrix multiplication application however for each matrix size the threads between 2-13 were tested. Each run was tested 100 times and the average time taken was calculated.
+
+The test PC only had 12 threads available to it so anything above 11 threads would be over subscribing the CPU.
+
+**NOTE: When specifying the number of threads this is in addition to the thread running the main function. So if you only have 8 executable units you should only use 7 threads for multiplication**
+
+The data was collected and compiled into excel spreadsheets and graphs were created comparing the actual speedup of the pthread implementation to the theoretical speedup using Amdahl's Law.
+
+<p align="center">
+	<img src="https://i.imgur.com/LrNJlXX.png">
+    <p align="center"> Example Spreadsheet</p>
+</p>
+
+----
+
+## Results
+
+### 5x5
+<p align="center">
+	<img src="https://i.imgur.com/gd1k74z.png">
+    <p align="center"> Speed Up for 5x5 </p>
+</p>
+
+Unfortunately, the 5x5 matrix test was inconclusive as the serial implementation was too fast to measure accurately as it was under nS resolution.
+
+### 50x50
+<p align="center">
+	<img src="https://i.imgur.com/DUTDngx.png">
+    <p align="center"> Speed Up for 50x50 </p>
+</p>
+
+The 50x50 matrix test was more interesting, here we can see that the serial implementation was faster than the pthread implementation. Which lead to a speedup on less that 1 for the pthread implementation. This is due to the overhead of creating and managing the threads.
+
+When threads are created and destroyed there is a cost associated with this. This cost is not present in the serial implementation as there is only one thread running the application. Therefore, the serial implementation can be busy doing the matrix multiplication while the pthread implementation is busy creating and destroying threads.
+
+From this we can conclude that the pthread implementation is not suitable for small matrix sizes.
+### 500x500
+<p align="center">
+    <img src="https://i.imgur.com/XKcaXjl.png">
+    <p align="center"> Speed Up for 500x500 </p>
+</p>
+
+However, for larger matrix sizes the pthread implementation is faster than the serial implementation and follows Amdahl's Law closely. Here the extra threads can be used to speed up the matrix multiplication.
+
+It is worth noting that after 9 threads the speedup no longer follows Amdahl's Law. The system has 12 cores so the expected result is that the speedup should follow Amdahl's Law until 11 threads are used for the multiplication. (1 thread for the main function)
+
+This could be due to the fact that the application was run on an OS and not bare metal. The OS could be using the extra threads for other tasks that will have priority over the application. This would mean that some of the threads will be context switched out and not be able to do any work for some time in order to allow the OS to do its work.
+
+It is also worth noting that the speedup tanks after 11 threads. This is due to the fact that the application is over subscribed. The application is trying to use more threads than the system has available. This means that some threads will be context switched out and not be able to do any work for some time in order to allow the OS to do its work. The more threads you over subscribe the worse the performance will be.
+
+The Amdahl's Law Parallel Efficiency for this was 0.92. This means that 92% of the code was parallelised and 8% was executed serially. This is a good result as it means that the majority of the code was parallelised and the application is suitable for parallelisation.
+
+You will never get 100% parallel efficiency as there will always be some code that is executed serially. For example, the code that creates and destroys the threads.
+
+### 1000x1000
+
+<p align="center">
+    <img src="https://i.imgur.com/GxPg2TD.png">
+    <p align="center"> Speed Up for 1000x1000 </p>
+</p>
+
+This follows the same trend as the 500x500 matrix size. The speedup follows Amdahl's Law closely until 9 threads are used. After 9 threads the speedup no longer follows Amdahl's Law.
+
+The Amdahl's Law Parallel Efficiency for this was 0.92 as well.
+### 2000x2000
+
+<p align="center">
+    <img src="https://i.imgur.com/QKD2MiL.png">
+    <p align="center"> Speed Up for 2000x2000 </p>
+</p>
+
+This follows the same trend as the 500x500 matrix size. The speedup follows Amdahl's Law closely until 9 threads are used. After 9 threads the speedup no longer follows Amdahl's Law. This could be for much the same reason as the 500x500 matrix size.
+
+The Amdahl's Law Parallel Efficiency for this was 0.92 as well.
 
 ----
 
