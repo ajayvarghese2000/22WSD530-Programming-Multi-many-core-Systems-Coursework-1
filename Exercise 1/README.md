@@ -217,3 +217,49 @@ The user has the option to either use a 4x4 matrix or a 1000x1000 matrix. To use
 
 **This program can not be interacted with using arguments and must be interacted with using the make file.**
 
+
+#### Multi Threaded Generic
+
+First, navigate to the `./Exercise 2/Pthreads Implementation/Generic` directory.
+
+To run the program with the default values, simply run the following command in the terminal.
+
+```
+    make
+```
+
+This will build the program and place create an executable file in `./bin/` directory.
+
+This will run the pthread implementation of the matrix multiplication application with two matrices of size 2000x2000 each once using 8 threads for multiplication. The time taken to calculate the matrix will be printed to the console.
+
+**NOTE: When specifying the number of threads this is in addition to the thread running the main function. So if you only have 8 executable units you should only use 7 threads for multiplication**
+
+This program can be change similar to the Single Threaded Generic program. 
+
+To change the matrix size, simply change the variables `a_size` and `b_size` either in the make file or on the command line. For example, to run the program with two matrices of size 1000x1000 each, run the following command in the terminal.
+
+```
+    make a_size=1000x1000 b_size=1000x1000
+``` 
+
+To change the number of threads, simply change the `threads` variable either in the make file or on the command line. For example, to run the program with two matrices of size 1000x1000 each and use 4 threads for multiplication, run the following command in the terminal.
+
+```
+    make a_size=1000x1000 b_size=1000x1000 threads=4
+```
+
+You can also change how many runs of the application it preforms by changing the `runs` variable either in the make file or on the command line. For example, to run the program with two matrices of size 1000x1000 each and run the application 5 times, run the following command in the terminal.
+
+```
+    make a_size=1000x1000 b_size=1000x1000 runs=5
+```
+
+Ultimately all this does is change the arguments passed into the binary program.
+
+You can also interact with the raw executable file directly. To do this, navigate to the `./bin/` directory and run the following command in the terminal.
+
+```
+    ./Matrix_Multiply_Pthreads.exe -A 1000x1000 -B 1000x1000 -T 4
+```
+
+Where `-A` is the size of the first matrix and `-B` is the size of the second matrix. The size of the matrices are in the format `widthxheight`. `-T` is the number of threads to use for multiplication.
