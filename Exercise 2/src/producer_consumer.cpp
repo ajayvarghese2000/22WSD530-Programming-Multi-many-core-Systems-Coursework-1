@@ -95,6 +95,9 @@ struct consumerInputArgs
     // A pointer to the mutex that will be used to protect the total number of elements consumed
     pthread_mutex_t* totalElementsConsumedMutex;
 
+    // A pointer to a mutex that will be used to protect the cout
+    pthread_mutex_t* coutMutex;
+
     // A pointer to the semaphore that will be used to signal when the buffer is full
     sem_t* full;
 
@@ -292,8 +295,11 @@ void* consumer(void* args)
         // Print the consumed element to the console
         // cout << "Consumer " << pthread_self() << " Got: " << temp << endl;
 
-        // // Preform a quick sort on the array to insert the new element
-        quicksort(sortedArray,i , temp);
+        // Preform a quick sort on the array to insert the new element
+        quicksort(sortedArray, i , temp);
+
+        // Lock the cout mutex
+        pthread_mutex_lock(inputArgs->coutMutex);
 
         // Printout which consumer is printing the sorted array
         cout << "Consumer " << pthread_self() << " Sorted Array: ";
@@ -305,6 +311,10 @@ void* consumer(void* args)
         }
         
         cout << endl;
+
+        // Unlock the cout mutex
+        pthread_mutex_unlock(inputArgs->coutMutex);
+        
     }
 
     return NULL;
@@ -365,6 +375,7 @@ int main(int argc, char *argv[])
     // Create the mutexs
     pthread_mutex_t mutexBuffer = PTHREAD_MUTEX_INITIALIZER;
     pthread_mutex_t mutexTotalElementsConsumed = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_t mutexCout = PTHREAD_MUTEX_INITIALIZER;
 
     // Create the buffer index
     int nextSlot = 0;
@@ -421,6 +432,7 @@ int main(int argc, char *argv[])
         consumerArgs[i].totalElementsConsumed = &totalElements;                             // Address to the total number of elements consumed
         consumerArgs[i].mutex = &mutexBuffer;                                               // Address to the mutex
         consumerArgs[i].totalElementsConsumedMutex = &mutexTotalElementsConsumed;           // Address to the mutex
+        consumerArgs[i].coutMutex = &mutexCout;                                             // Address to the mutex
         consumerArgs[i].empty = &empty;                                                     // Address to the empty semaphore
         consumerArgs[i].full = &full;                                                       // Address to the full semaphore
 
