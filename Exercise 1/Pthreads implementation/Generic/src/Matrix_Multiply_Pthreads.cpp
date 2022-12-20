@@ -196,6 +196,9 @@ int main(int argc, char *argv[])
         Matrix_C[i] = new int[B_Columns];
     }
 
+    // Seeding the random number generator
+    srand(time(NULL));
+
     // Filling up A and B with random values between 0 and 100
     for (int i = 0; i < A_Rows; i++)
     {
