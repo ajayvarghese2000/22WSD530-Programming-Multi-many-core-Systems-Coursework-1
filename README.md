@@ -537,15 +537,7 @@ The default arguments are as follows.
 
 This will create 4 producers, 1 consumer, each producer will generate 4 items and the buffer size will be 10.
 
-If you want to change the variables in the make file and then run test.
-
-```
-    make test producer_threads=1 consumer_threads=2 items=5 buffer_size=10
-```
-
-This will create 1 producer, 2 consumers, each producer will generate 5 items and the buffer size will be 10.
-
-However, due to the simplicity of the program it is better to interact with the executable directly and only use the makefile to build the program.
+Due to the simplicity of the program it is better to interact with the executable directly and only use the makefile to build the program not run it.
 
 To interact with the executable directly, you must pass in the arguments as described earlier.
 
@@ -554,3 +546,5 @@ To interact with the executable directly, you must pass in the arguments as desc
 ```
 
 This will create 4 producers, 1 consumer, each producer will generate 4 items and the buffer size will be 10.
+
+Once compiled, you can find the executable in the `./bin` directory.

@@ -148,6 +148,10 @@ int main()
             cout << "Matrix B is:" << endl;
             print_Matrix(Matrix_4x4_B);
             cout << endl;
+        #else
+            
+            // Print the that the matrix is too large to print
+            cout << "The matrix is too large to print" << endl;
 
         #endif
 
