@@ -41,7 +41,7 @@
 
 ## Introduction
 
-This exercise aims to measure the performance of a matrix multiplication algorithm using pthreads. The algorithm is a simple matrix multiplication algorithm that uses a single thread to calculate each element of the resulting matrix. The algorithm is as follows:
+This exercise aims to measure the performance of a matrix multiplication algorithm using pthreads. The algorithm is as follows:
 
 ```c++
 for (int i = 0; i < N; i++) 
@@ -61,6 +61,7 @@ Where **C** is the resulting matrix, **A** and **B** are the two matrices being 
 For small matrices the algorithm is fast enough to be run on a single thread, however for larger matrices the algorithm becomes slow and the time taken to calculate the matrix becomes significant. This is where the use of multiple threads comes in.
 
 This task requires 4 programs to be made:
+
 1. A single threaded program that calculates the matrix multiplication developed to support any size of matrix.
 2. A multi-threaded program that calculates the matrix multiplication developed to support any size of matrix and any number of threads.
 3. A single threaded program that calculates the matrix multiplication that uses fixed input values of at least 4x4

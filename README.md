@@ -4,18 +4,18 @@
 
 <!-- If you do not have a markdown viewer please visit the flowing github link to  properly view the file in the intended format -->
 
-<!-- https://github.com/ajayvarghese2000/22WSD530-Programming-Multi-many-core-Systems-Coursework-1/tree/main/Exercise%201 -->
+<!-- https://github.com/ajayvarghese2000/22WSD530-Programming-Multi-many-core-Systems-Coursework-1/ -->
 
 <!-- This GitHub will be private until after the submission deadline -->
 # 22WSD530 Programming Multi/many-core Systems Coursework 1
 
-This repository contains the code for the first coursework for the module 22WSD530 Programming Multi/many-core Systems. The coursework is split into 2 exercises.
+This repository contains the code for coursework 1 for 22WSD530 Programming Multi/many-core Systems. The coursework is split into 2 exercises.
 
-Each exercise has its own README.md file that explains what it is doing and how to run it.
+Each exercise has its own README.md file that explains what it is doing and how to build/run it.
 
 The README.md files can be found in the Exercise 1 and Exercise 2 folders.
 
-They are also summarised below.
+They are also copied below.
 
 ## Table of Contents
 - [Exercise 1 Matrix Multiplication using Pthreads](#Exercise-1-Matrix-Multiplication-using-Pthreads)
@@ -57,7 +57,7 @@ They are also summarised below.
 
 ## Introduction
 
-This exercise aims to measure the performance of a matrix multiplication algorithm using pthreads. The algorithm is a simple matrix multiplication algorithm that uses a single thread to calculate each element of the resulting matrix. The algorithm is as follows:
+This exercise aims to measure the performance of a matrix multiplication algorithm using pthreads. The algorithm is as follows:
 
 ```c++
 for (int i = 0; i < N; i++) 
@@ -77,6 +77,7 @@ Where **C** is the resulting matrix, **A** and **B** are the two matrices being 
 For small matrices the algorithm is fast enough to be run on a single thread, however for larger matrices the algorithm becomes slow and the time taken to calculate the matrix becomes significant. This is where the use of multiple threads comes in.
 
 This task requires 4 programs to be made:
+
 1. A single threaded program that calculates the matrix multiplication developed to support any size of matrix.
 2. A multi-threaded program that calculates the matrix multiplication developed to support any size of matrix and any number of threads.
 3. A single threaded program that calculates the matrix multiplication that uses fixed input values of at least 4x4
